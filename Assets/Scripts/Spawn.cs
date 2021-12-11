@@ -1,11 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Spawn : MonoBehaviour
 {
 
+    public GameObject controlMenu;
+    public GameObject canvas;
+
     public int flockSize = 10;
+
+    public static bool isGamePaused = false;
 
     public GameObject flockEntityPrefab;
 
@@ -18,6 +24,16 @@ public class Spawn : MonoBehaviour
     private Vector3[] flockPositions;
     private Vector3[] flockRotations;
 
+
+    int getFlockSize()
+    {
+        return this.flockSize;
+    }
+
+    void setFlockSize(int newSize)
+    {
+        this.flockSize = newSize;
+    }
 
     Vector3 getRandomVector3()
     {
@@ -61,12 +77,37 @@ public class Spawn : MonoBehaviour
     void Start()
     {
         generateFlockEntities();
+        controlMenu = GameObject.Find("ControlMenu");
+        //canvas.SetActive(false);
+        controlMenu.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        // TODO
+        if(Input.GetKeyUp(KeyCode.Escape))
+        {
+            if(isGamePaused)
+                Resume(); 
+            else
+                Pause();
+        }
+    }
+
+    public void Resume()
+    {
+        isGamePaused = false;
+        Time.timeScale = 1f;
+        controlMenu.SetActive(false);
+
+    }
+
+    public void Pause()
+    {
+        isGamePaused = true;
+        Time.timeScale = 0f;
+        controlMenu.SetActive(true);
+
     }
 
     private void OnDrawGizmos()
@@ -98,6 +139,14 @@ public class Spawn : MonoBehaviour
             Gizmos.color = Color.Lerp(Color.cyan, Color.magenta, localPos.sqrMagnitude * 2);
             Gizmos.DrawCube(realPos, Vector3.one);
         }
+    }
+
+    public void SubmitField()
+    {
+        InputField flockSizeField = GameObject.Find("FlockSize").GetComponent<InputField>();
+        int newFlockSize = int.Parse(flockSizeField.text);
+        setFlockSize(newFlockSize);
+        OnValidate();
     }
 
     private void OnValidate()
