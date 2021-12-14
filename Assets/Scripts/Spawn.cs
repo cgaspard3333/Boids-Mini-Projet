@@ -24,6 +24,9 @@ public class Spawn : MonoBehaviour
     private Vector3[] flockPositions;
     private Vector3[] flockRotations;
 
+    public GameObject[] getFlockEntities(){
+        return this.flockEntities;
+    }
 
     int getFlockSize()
     {
@@ -68,7 +71,7 @@ public class Spawn : MonoBehaviour
 
             newEntity.transform.position = this.transform.position + Vector3.Scale(this.transform.localScale, flockPositions[i]);
             newEntity.transform.rotation = Quaternion.Euler(flockRotations[i]);
-
+        
             flockEntities[i] = newEntity;
         }
     }
