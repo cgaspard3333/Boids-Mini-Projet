@@ -50,7 +50,6 @@ Les scripts boid conaissent les boid settings.
 
 Toute l'équipe a travaillé d'arrache pied sur ce projet innovant et bien pensé.
 Personne n'a été mis de côté. On a apprécié passer tous nos après-midi ensemble sur l'outil discord pour débattre de l'architecture et des noms de variables.
-On a apprécié travailler en pensant à toi Marie (Tom 06 07 08 09 10).
 
 ## Liste des scripts
 
@@ -81,10 +80,6 @@ Group 1 branch
 
 ### rencontre d'une autre entité
 
-tir, quelle portée, qu'est-ce qui est détruit, qui tire
-fuite, séparation du groupe, certaines entités tirent et les se tirent
-récupération d'entités adverses
-
 ## Liste des "choses amusantes" à réaliser
 
 - Gizmo
@@ -98,4 +93,5 @@ Ce qu'on aimerait valoriser :
 https://www.red3d.com/cwr/boids/
 https://github.com/lormori/FlockingDemo/tree/f3f00d3619817fa2667381719f174739ae6bfd41
 https://unity.com
+
 
