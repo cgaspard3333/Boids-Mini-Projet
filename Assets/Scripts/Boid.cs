@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Boid : MonoBehaviour
 {
@@ -113,6 +114,44 @@ public class Boid : MonoBehaviour
                                     ( alignmentVector.normalized)); //* alignmentWeight ) );
 
         return flockingVector;
+    }
+
+    public void IncreaseVariables(int variable)
+    {
+        if(variable == 0)
+        {
+            this.velocity += 1f;
+            print("Velocity now is " + this.velocity.ToString());
+        }
+        else if(variable == 1)
+        { 
+            this.neighborDist += 1f;
+            print("Minimal distance between boids now is " + this.neighborDist.ToString());
+        }
+    }
+
+    public void DecreaseVariables(int variable)
+    {
+        if(variable == 0)
+        {
+            if(this.velocity == 0f)
+                print("Speed cannot go lower than 0.");
+            else
+            {
+                this.velocity -= 1f;
+                print("Velocity now is " + this.velocity.ToString());
+            }
+        }
+        else if(variable == 1)
+        {
+            if(this.neighborDist == 0f)
+                print("Distance between boids cannot be lower than 0.");
+            else
+            {
+                this.neighborDist -= 1f;
+                print("Minimal distance between boids now is " + this.neighborDist.ToString());
+            }
+        }
     }
 
     void Start()

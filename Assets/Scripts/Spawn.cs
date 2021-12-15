@@ -28,6 +28,8 @@ public class Spawn : MonoBehaviour
         return this.flockEntities;
     }
 
+    Boid[] boids;
+
     int getFlockSize()
     {
         return this.flockSize;
@@ -83,6 +85,7 @@ public class Spawn : MonoBehaviour
         controlMenu = GameObject.Find("ControlMenu");
         //canvas.SetActive(false);
         controlMenu.SetActive(false);
+        boids = FindObjectsOfType(typeof(Boid)) as Boid[];
     }
 
     // Update is called once per frame
@@ -110,7 +113,6 @@ public class Spawn : MonoBehaviour
         isGamePaused = true;
         Time.timeScale = 0f;
         controlMenu.SetActive(true);
-
     }
 
     private void OnDrawGizmos()
@@ -150,6 +152,22 @@ public class Spawn : MonoBehaviour
         int newFlockSize = int.Parse(flockSizeField.text);
         setFlockSize(newFlockSize);
         OnValidate();
+    }
+
+    public void Increaser(int variable)
+    {    
+        foreach(var boid in boids)
+        {
+            boid.IncreaseVariables(variable);
+        }
+    }
+
+    public void Decreaser(int variable)
+    {
+        foreach(var boid in boids)
+        {
+            boid.DecreaseVariables(variable);
+        }
     }
 
     private void OnValidate()
