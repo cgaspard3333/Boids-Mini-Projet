@@ -15,11 +15,13 @@ public class Boid : MonoBehaviour
     private static readonly float mMaxVelocity = 15.0f;
     private static readonly float mMaxCubeExtent = 80.0f;
     private static readonly float mMaxCubeExtentX = 80.0f;
+    private float neighborDist = 5.0f;
 
     //-----------------------------------------------------------------------------
     // Data
     //-----------------------------------------------------------------------------
     private Vector3 mVelocity = new Vector3();
+    float velocity;
 
     //-----------------------------------------------------------------------------
     private void Reposition()
