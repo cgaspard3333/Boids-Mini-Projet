@@ -11,7 +11,6 @@ public class Boid : MonoBehaviour
     //-----------------------------------------------------------------------------
     // Const Data
     //-----------------------------------------------------------------------------
-    private static readonly float mRadiusSquaredDistance = 1.0f;
     private static readonly float mMaxVelocity = 15.0f;
     private static readonly float mMaxCubeExtentZ = 100.0f;
     private static readonly float mMaxCubeExtentX = 100.0f;
@@ -24,10 +23,8 @@ public class Boid : MonoBehaviour
     //-----------------------------------------------------------------------------
     // Data
     //-----------------------------------------------------------------------------
-    private Vector3 mVelocity = new Vector3();
-    float velocity;
-    private float neighborDist = 5.0f;
-
+    public float mRadiusSquaredDistance = 1.0f;
+    public Vector3 mVelocity = new Vector3();
 
     //-----------------------------------------------------------------------------
     private void Reposition()
@@ -132,13 +129,15 @@ public class Boid : MonoBehaviour
     {
         if (variable == 0)
         {
-            this.velocity += 1f;
-            print("Velocity now is " + this.velocity.ToString());
+            this.mVelocity.x += 0.1f;
+            this.mVelocity.y += 0.1f;
+            this.mVelocity.z += 0.1f;
+            print("Velocity now is " + this.mVelocity.ToString());
         }
         else if (variable == 1)
         {
-            this.neighborDist += 1f;
-            print("Minimal distance between boids now is " + this.neighborDist.ToString());
+            this.mRadiusSquaredDistance += 0.2f;
+            print("Minimal distance between boids now is " + this.mRadiusSquaredDistance.ToString());
         }
     }
 
@@ -146,23 +145,23 @@ public class Boid : MonoBehaviour
     {
         if (variable == 0)
         {
-            if (this.velocity == 0f)
-                print("Speed cannot go lower than 0.");
-            else
-            {
-                this.velocity -= 1f;
-                print("Velocity now is " + this.velocity.ToString());
-            }
+            this.mVelocity.x -= 0.1f;
+            this.mVelocity.y -= 0.1f;
+            this.mVelocity.z -= 0.1f;
+            if(this.mVelocity.x < 0)
+                this.mVelocity.x = 0;
+            if(this.mVelocity.y < 0)
+                this.mVelocity.y = 0;
+            if(this.mVelocity.z < 0)
+                this.mVelocity.z = 0;
+            print("Velocity now is " + this.mVelocity.ToString());
         }
         else if (variable == 1)
         {
-            if (this.neighborDist == 0f)
-                print("Distance between boids cannot be lower than 0.");
-            else
-            {
-                this.neighborDist -= 1f;
-                print("Minimal distance between boids now is " + this.neighborDist.ToString());
-            }
+            this.mRadiusSquaredDistance -= 0.2f;
+            if(this.mRadiusSquaredDistance < 0)
+                this.mRadiusSquaredDistance = 0;    
+            print("Minimal distance between boids now is " + this.mRadiusSquaredDistance.ToString());
         }
     }
 

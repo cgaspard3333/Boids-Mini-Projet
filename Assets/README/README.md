@@ -49,7 +49,7 @@ Les scripts boid conaissent les boid settings.
 ## Liste des tâches
 
 Toute l'équipe a travaillé d'arrache pied sur ce projet innovant et bien pensé.
-Personne n'a été mis de côté. On a apprécié passer tous nos après-midi de mercredi ensemble sur l'outil discord pour débattre de l'architecture et des noms de variables.
+Personne n'a été mis de côté. On a apprécié passer tous nos après-midi ensemble sur l'outil discord pour débattre de l'architecture et des noms de variables.
 On a apprécié travailler en pensant à toi Marie (Tom 06 07 08 09 10).
 
 ## Liste des scripts
