@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Spawn : MonoBehaviour
 {
-
+    public static Spawn instance =null;
     public GameObject controlMenu;
     public GameObject canvas;
 
@@ -92,6 +92,7 @@ public class Spawn : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        instance = this ;
         generateFlockEntities();
         controlMenu = GameObject.Find("ControlMenu");
         //canvas.SetActive(false);

@@ -17,9 +17,9 @@ public class Boid : MonoBehaviour
     private static readonly float mMaxCubeExtentX = 80.0f;
     private static readonly float mMaxCubeExtentY = 50.0f;
 
-    public float separationWeight = 0.2f;
-    public float alignmentWeight = 0.5f;
-    public float cohesionWeight = 0.8f;
+    public float separationWeight;
+    public float alignmentWeight;
+    public float cohesionWeight;
 
     //-----------------------------------------------------------------------------
     // Data
@@ -79,6 +79,10 @@ public class Boid : MonoBehaviour
         Vector3 cohesionVector = new Vector3();
         Vector3 separateVector = new Vector3();
         Vector3 alignmentVector = new Vector3();
+
+        separationWeight = Spawn.instance.separationWeight;
+        alignmentWeight = Spawn.instance.alignmentWeight;
+        cohesionWeight = Spawn.instance.cohesionWeight;
 
         int count = 0;
 
