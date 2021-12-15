@@ -7,7 +7,7 @@ public class Boid_m : MonoBehaviour
 
     public Vector3 velocity;
 
-    public float maxVelocity;
+    public float maxVelocity = 2;
     // Start is called before the first frame update
     void Start()
     {

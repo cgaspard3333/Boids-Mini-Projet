@@ -8,9 +8,9 @@ public class BoidInverseMagnetisimeBehaviour : MonoBehaviour
 {
    private Boid_m boid;
 
-    public float radius;
+    public float radius = 15.0f;
 
-    public float repulsionForce;
+    public float repulsionForce = 1.0f;
     // Start is called before the first frame update
     void Start()
     {

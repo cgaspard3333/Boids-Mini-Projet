@@ -9,7 +9,7 @@ public class BoidAlignementBehaviour : MonoBehaviour
  
     private Boid_m boid;
 
-    public float radius;
+    public float radius = 30.0f;
 
     // Start is called before the first frame update
     void Start()

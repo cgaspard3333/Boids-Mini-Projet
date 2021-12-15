@@ -9,7 +9,7 @@ public class BoidCohesionBehaviour : MonoBehaviour
 
     private Boid_m boid;
 
-    public float radius;
+    public float radius = 50.0f;
 
     // Start is called before the first frame update
     void Start()
