@@ -15,13 +15,19 @@ public class Boid : MonoBehaviour
     private static readonly float mMaxVelocity = 15.0f;
     private static readonly float mMaxCubeExtent = 80.0f;
     private static readonly float mMaxCubeExtentX = 80.0f;
-    private float neighborDist = 5.0f;
+    private static readonly float mMaxCubeExtentY = 50.0f;
+
+    public float separationWeight = 0.8f;
+    public float alignmentWeight = 0.5f;
+    public float cohesionWeight = 0.7f;
 
     //-----------------------------------------------------------------------------
     // Data
     //-----------------------------------------------------------------------------
     private Vector3 mVelocity = new Vector3();
     float velocity;
+    private float neighborDist = 5.0f;
+
 
     //-----------------------------------------------------------------------------
     private void Reposition()
@@ -111,9 +117,9 @@ public class Boid : MonoBehaviour
         cohesionVector = ( cohesionVector - transform.position );
 
         // Add All vectors together to get flocking
-        Vector3 flockingVector = ( ( separateVector.normalized) +//* separationWeight ) +
-                                    ( cohesionVector.normalized) +//* cohesionWeight ) +
-                                    ( alignmentVector.normalized)); //* alignmentWeight ) );
+        Vector3 flockingVector = ( ( separateVector.normalized * separationWeight ) +
+                                    ( cohesionVector.normalized * cohesionWeight ) +
+                                    ( alignmentVector.normalized * alignmentWeight ) );
 
         return flockingVector;
     }
