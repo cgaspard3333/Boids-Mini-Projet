@@ -13,7 +13,7 @@ public class Gentle_handle : MonoBehaviour
 
     public float minSpeed = 3f ;  // minimum range of speed to move
     public float maxSpeed = 10f;  // maximum range of speed to move
-    float speed;     // speed is a constantly changing value from the random range of minSpeed and maxSpeed 
+    public float speed = 3f;     // speed is a constantly changing value from the random range of minSpeed and maxSpeed 
 
     public string[] collisionTags;             //  What are the GO tags that will act as colliders that trigger a
                                                //  direction change? Tags like for walls, room objects, etc.
@@ -53,7 +53,7 @@ public class Gentle_handle : MonoBehaviour
 
         vboid = transform.GetChild(0).GetComponent<Boid>().vtot;
         vboid = transform.GetChild(0).GetComponent<Boid>().v3;
-        RotationTo(v3);
+       /* RotationTo(v3);*/
 
 
     }
@@ -62,7 +62,7 @@ public class Gentle_handle : MonoBehaviour
     IEnumerator RotationTo(Vector3 target)
     {
         aimEulerAngles = target;
-        aimRotation.eulerAngles = aimEulerAngles + transform.parent.rotation.eulerAngles;
+        aimRotation.eulerAngles = aimEulerAngles;
         float duration = 1.5f;
         float time = 0;
         while (time < duration)
@@ -103,22 +103,22 @@ public class Gentle_handle : MonoBehaviour
             if (transform.GetChild(0).gameObject.GetComponent<Boid>().localSwarm.Count > 0 | vboid != Vector3.zero)
             {
 
-            /*              transform.LookAt(vboid);
-                          transform.Rotate(randomDirection * Time.deltaTime * 5.0f);*/
-                
-                speed = 2f;
+                transform.LookAt(v3);
+               /* transform.Rotate(randomDirection * Time.deltaTime * 5.0f);*/
+
+
                 rb.velocity = (transform.up * speed);
-                Debug.DrawLine(transform.position, transform.position + vboid, Color.red);
+               /* Debug.DrawLine(transform.position, transform.position + vboid, Color.red);*/
 
             }
             else
             {
 
                 randomDirection = new Vector3(Random.Range(-1f, 1f) * (rotationRange / 2) + baseDirection, 0, Random.Range(-1f, 1f) * (rotationRange / 2) + baseDirection); //   Moving at random angles 
-                speed = Random.Range(minSpeed, maxSpeed);              //      Change this range of numbers to change speed
-                speed = 4f;
+                           //      Change this range of numbers to change speed
+             
                 rb.velocity = (transform.up * speed);
-                transform.Rotate(randomDirection * Time.deltaTime * 5.0f);
+                transform.Rotate(randomDirection * Time.deltaTime * 5.0f * speed); 
             }
 
             yield return new WaitForSeconds(Time.deltaTime);
