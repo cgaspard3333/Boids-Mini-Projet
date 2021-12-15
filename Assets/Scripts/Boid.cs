@@ -7,80 +7,134 @@ public class Boid : MonoBehaviour
     private GameObject spawn;
     private GameObject[] theFlock;
 
-    [Range(0.1f, 20.0f)]
-    public float velocity = 6.0f;
+    //-----------------------------------------------------------------------------
+    // Const Data
+    //-----------------------------------------------------------------------------
+    private static readonly float mRadiusSquaredDistance = 5.0f;
+    private static readonly float mMaxVelocity = 15.0f;
+    private static readonly float mMaxCubeExtent = 80.0f;
+    private static readonly float mMaxCubeExtentX = 80.0f;
 
-    [Range(0.0f, 0.9f)]
-    public float velocityVariation = 0.5f;
+    //-----------------------------------------------------------------------------
+    // Data
+    //-----------------------------------------------------------------------------
+    private Vector3 mVelocity = new Vector3();
 
-    [Range(0.1f, 20.0f)]
-    public float rotationCoeff = 4.0f;
-
-    [Range(0.1f, 10.0f)]
-    public float neighborDist = 2.0f;
-
-
-    // Caluculates the separation vector with a target.
-    Vector3 GetSeparationVector(Transform target)
+    //-----------------------------------------------------------------------------
+    private void Reposition()
     {
-        var diff = transform.position - target.transform.position;
-        var diffLen = diff.magnitude;
-        var scaler = Mathf.Clamp01(1.0f - diffLen / neighborDist);
-        return diff * (scaler / diffLen);
+        Vector3 position = transform.position;
+
+        if( position.x >= mMaxCubeExtentX )
+        {
+            position.x = mMaxCubeExtentX - 0.2f;
+            mVelocity.x *= -1;
+        }
+        else if( position.x <= -mMaxCubeExtentX )
+        {
+            position.x = -mMaxCubeExtentX + 0.2f;
+            mVelocity.x *= -1;
+        }
+
+        if( position.y >= mMaxCubeExtent )
+        {
+            position.y = mMaxCubeExtent - 0.2f;
+            mVelocity.y *= -1;
+        }
+        else if( position.y <= -mMaxCubeExtent )
+        {
+            position.y = -mMaxCubeExtent + 0.2f;
+            mVelocity.y *= -1;
+        }
+
+        if( position.z >= mMaxCubeExtent )
+        {
+            position.z = mMaxCubeExtent - 0.2f;
+            mVelocity.z *= -1;
+        }
+        else if( position.z <= -mMaxCubeExtent )
+        {
+            position.z = -mMaxCubeExtent + 0.2f;
+            mVelocity.z *= -1;
+        }
+
+        transform.forward = mVelocity.normalized;
+        transform.position = position;
     }
 
-    void BoidBehavior(){
-        var currentPosition = transform.position;
-        var currentRotation = transform.rotation;
+    //-----------------------------------------------------------------------------
+    // Flocking Behavior
+    //-----------------------------------------------------------------------------
+    private Vector3 FlockingBehaviour()
+    {
+        Vector3 cohesionVector = new Vector3();
+        Vector3 separateVector = new Vector3();
+        Vector3 alignmentVector = new Vector3();
 
-        // Initializes the vectors.
-        var separation = Vector3.zero;
-        var alignment = transform.forward;
-        var cohesion = transform.position;
+        int count = 0;
 
-        // Looks up nearby boids.
-        var nearbyBoids = Physics.OverlapSphere(currentPosition, neighborDist);
-
-        // Accumulates the vectors.
-        foreach (var boid in nearbyBoids)
+        for( int index = 0; index < theFlock.Length; index++ )
         {
-            if (boid.gameObject == gameObject) continue;
-            var t = boid.transform;
-            separation += GetSeparationVector(t);
-            alignment += t.forward;
-            cohesion += t.position;
+            if( this != theFlock[ index ] )
+            {
+                float distance = ( transform.position - theFlock[ index ].transform.position ).sqrMagnitude;
+
+                if( distance > 0 && distance < mRadiusSquaredDistance )
+                {
+                    cohesionVector += theFlock[ index ].transform.position;
+                    separateVector += theFlock[ index ].transform.position - transform.position;
+                    alignmentVector += theFlock[ index ].transform.forward;
+
+                    count++;
+                }
+            }
         }
 
-        var avg = 1.0f / nearbyBoids.Length;
-        alignment *= avg;
-        cohesion *= avg;
-        cohesion = (cohesion - currentPosition).normalized;
-
-        
-        // Calculates a rotation from the vectors.
-        var direction = separation + alignment + cohesion;
-        var rotation = Quaternion.FromToRotation(Vector3.forward, direction.normalized);
-
-        // Applys the rotation with interpolation.
-        if (rotation != currentRotation)
+        if( count == 0 )
         {
-            var ip = Mathf.Exp(-rotationCoeff * Time.deltaTime);
-            transform.rotation = Quaternion.Slerp(rotation, currentRotation, ip);
+            return Vector3.zero;
         }
-        
-        // Moves forawrd.
-        transform.position = currentPosition + transform.forward * (velocity * Time.deltaTime);
+
+        // revert vector
+        // separation step
+        separateVector /= count;
+        separateVector *= -1;
+
+        // forward step
+        alignmentVector /= count;
+
+        // cohesione step
+        cohesionVector /= count;
+        cohesionVector = ( cohesionVector - transform.position );
+
+        // Add All vectors together to get flocking
+        Vector3 flockingVector = ( ( separateVector.normalized) +//* separationWeight ) +
+                                    ( cohesionVector.normalized) +//* cohesionWeight ) +
+                                    ( alignmentVector.normalized)); //* alignmentWeight ) );
+
+        return flockingVector;
     }
 
     void Start()
     {    
         Spawn spawnScript = GameObject.FindObjectOfType(typeof(Spawn)) as Spawn;
         theFlock = spawnScript.getFlockEntities();
+        mVelocity = transform.forward;
+        mVelocity = Vector3.ClampMagnitude( mVelocity, mMaxVelocity );
     } 
 
     void Update()
     {
-        BoidBehavior();
+        //BoidBehavior();
+        mVelocity += FlockingBehaviour();
+
+        mVelocity = Vector3.ClampMagnitude( mVelocity, mMaxVelocity );
+
+        transform.position += mVelocity * Time.deltaTime;
+
+        transform.forward = mVelocity.normalized;
+
+        Reposition();
     }
 
 
