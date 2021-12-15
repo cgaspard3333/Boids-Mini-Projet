@@ -13,9 +13,9 @@ public class Boid : MonoBehaviour
     //-----------------------------------------------------------------------------
     private static readonly float mRadiusSquaredDistance = 1.0f;
     private static readonly float mMaxVelocity = 15.0f;
-    private static readonly float mMaxCubeExtent = 80.0f;
-    private static readonly float mMaxCubeExtentX = 80.0f;
-    private static readonly float mMaxCubeExtentY = 50.0f;
+    private static readonly float mMaxCubeExtentZ = 100.0f;
+    private static readonly float mMaxCubeExtentX = 100.0f;
+    private static readonly float mMaxCubeExtentY = 80.0f;
 
     public float separationWeight;
     public float alignmentWeight;
@@ -34,36 +34,36 @@ public class Boid : MonoBehaviour
     {
         Vector3 position = transform.position;
 
-        if( position.x >= mMaxCubeExtentX )
+        if (position.x >= mMaxCubeExtentX)
         {
             position.x = mMaxCubeExtentX - 0.2f;
             mVelocity.x *= -1;
         }
-        else if( position.x <= -mMaxCubeExtentX )
+        else if (position.x <= -mMaxCubeExtentX)
         {
             position.x = -mMaxCubeExtentX + 0.2f;
             mVelocity.x *= -1;
         }
 
-        if( position.y >= mMaxCubeExtent )
+        if (position.y >= mMaxCubeExtentY)
         {
-            position.y = mMaxCubeExtent - 0.2f;
+            position.y = mMaxCubeExtentY - 0.2f;
             mVelocity.y *= -1;
         }
-        else if( position.y <= -mMaxCubeExtent )
+        else if (position.y <= 0)
         {
-            position.y = -mMaxCubeExtent + 0.2f;
+            position.y = 0.2f;
             mVelocity.y *= -1;
         }
 
-        if( position.z >= mMaxCubeExtent )
+        if (position.z >= mMaxCubeExtentZ)
         {
-            position.z = mMaxCubeExtent - 0.2f;
+            position.z = mMaxCubeExtentZ - 0.2f;
             mVelocity.z *= -1;
         }
-        else if( position.z <= -mMaxCubeExtent )
+        else if (position.z <= -mMaxCubeExtentZ)
         {
-            position.z = -mMaxCubeExtent + 0.2f;
+            position.z = -mMaxCubeExtentZ + 0.2f;
             mVelocity.z *= -1;
         }
 
@@ -86,24 +86,24 @@ public class Boid : MonoBehaviour
 
         int count = 0;
 
-        for( int index = 0; index < theFlock.Length; index++ )
+        for (int index = 0; index < theFlock.Length; index++)
         {
-            if( this != theFlock[ index ] )
+            if (this != theFlock[index])
             {
-                float distance = ( transform.position - theFlock[ index ].transform.position ).sqrMagnitude;
+                float distance = (transform.position - theFlock[index].transform.position).sqrMagnitude;
 
-                if( distance > 0 && distance < mRadiusSquaredDistance )
+                if (distance > 0 && distance < mRadiusSquaredDistance)
                 {
-                    cohesionVector += theFlock[ index ].transform.position;
-                    separateVector += theFlock[ index ].transform.position - transform.position;
-                    alignmentVector += theFlock[ index ].transform.forward;
+                    cohesionVector += theFlock[index].transform.position;
+                    separateVector += theFlock[index].transform.position - transform.position;
+                    alignmentVector += theFlock[index].transform.forward;
 
                     count++;
                 }
             }
         }
 
-        if( count == 0 )
+        if (count == 0)
         {
             return Vector3.zero;
         }
@@ -118,25 +118,25 @@ public class Boid : MonoBehaviour
 
         // cohesione step
         cohesionVector /= count;
-        cohesionVector = ( cohesionVector - transform.position );
+        cohesionVector = (cohesionVector - transform.position);
 
         // Add All vectors together to get flocking
-        Vector3 flockingVector = ( ( separateVector.normalized * separationWeight ) +
-                                    ( cohesionVector.normalized * cohesionWeight ) +
-                                    ( alignmentVector.normalized * alignmentWeight ) );
+        Vector3 flockingVector = ((separateVector.normalized * separationWeight) +
+                                    (cohesionVector.normalized * cohesionWeight) +
+                                    (alignmentVector.normalized * alignmentWeight));
 
         return flockingVector;
     }
 
     public void IncreaseVariables(int variable)
     {
-        if(variable == 0)
+        if (variable == 0)
         {
             this.velocity += 1f;
             print("Velocity now is " + this.velocity.ToString());
         }
-        else if(variable == 1)
-        { 
+        else if (variable == 1)
+        {
             this.neighborDist += 1f;
             print("Minimal distance between boids now is " + this.neighborDist.ToString());
         }
@@ -144,9 +144,9 @@ public class Boid : MonoBehaviour
 
     public void DecreaseVariables(int variable)
     {
-        if(variable == 0)
+        if (variable == 0)
         {
-            if(this.velocity == 0f)
+            if (this.velocity == 0f)
                 print("Speed cannot go lower than 0.");
             else
             {
@@ -154,9 +154,9 @@ public class Boid : MonoBehaviour
                 print("Velocity now is " + this.velocity.ToString());
             }
         }
-        else if(variable == 1)
+        else if (variable == 1)
         {
-            if(this.neighborDist == 0f)
+            if (this.neighborDist == 0f)
                 print("Distance between boids cannot be lower than 0.");
             else
             {
@@ -167,12 +167,12 @@ public class Boid : MonoBehaviour
     }
 
     void Start()
-    {    
+    {
         Spawn spawnScript = GameObject.FindObjectOfType(typeof(Spawn)) as Spawn;
         theFlock = spawnScript.getFlockEntities();
         mVelocity = transform.forward;
-        mVelocity = Vector3.ClampMagnitude( mVelocity, mMaxVelocity );
-    } 
+        mVelocity = Vector3.ClampMagnitude(mVelocity, mMaxVelocity);
+    }
 
     void Update()
     {
