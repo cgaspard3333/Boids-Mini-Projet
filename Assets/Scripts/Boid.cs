@@ -11,15 +11,15 @@ public class Boid : MonoBehaviour
     //-----------------------------------------------------------------------------
     // Const Data
     //-----------------------------------------------------------------------------
-    private static readonly float mRadiusSquaredDistance = 5.0f;
+    private static readonly float mRadiusSquaredDistance = 1.0f;
     private static readonly float mMaxVelocity = 15.0f;
     private static readonly float mMaxCubeExtent = 80.0f;
     private static readonly float mMaxCubeExtentX = 80.0f;
     private static readonly float mMaxCubeExtentY = 50.0f;
 
-    public float separationWeight = 0.8f;
+    public float separationWeight = 0.2f;
     public float alignmentWeight = 0.5f;
-    public float cohesionWeight = 0.7f;
+    public float cohesionWeight = 0.8f;
 
     //-----------------------------------------------------------------------------
     // Data
@@ -175,7 +175,7 @@ public class Boid : MonoBehaviour
         //BoidBehavior();
         mVelocity += FlockingBehaviour();
 
-        mVelocity = Vector3.ClampMagnitude( mVelocity, mMaxVelocity );
+        //mVelocity = Vector3.ClampMagnitude( mVelocity, mMaxVelocity );
 
         transform.position += mVelocity * Time.deltaTime;
 

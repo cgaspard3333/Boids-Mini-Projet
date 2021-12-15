@@ -24,6 +24,17 @@ public class Spawn : MonoBehaviour
     private Vector3[] flockPositions;
     private Vector3[] flockRotations;
 
+    public float separationWeight = 0.8f;
+    public float alignmentWeight = 0.5f;
+    public float cohesionWeight = 0.7f;
+
+    //-----------------------------------------------------------------------------
+    // Data
+    //-----------------------------------------------------------------------------
+    public Slider separationSlider = null;
+    public Slider alignmentSlider = null;
+    public Slider cohesionSlider = null;
+
     public GameObject[] getFlockEntities(){
         return this.flockEntities;
     }
@@ -86,6 +97,7 @@ public class Spawn : MonoBehaviour
         //canvas.SetActive(false);
         controlMenu.SetActive(false);
         boids = FindObjectsOfType(typeof(Boid)) as Boid[];
+        Setup();
     }
 
     // Update is called once per frame
@@ -99,6 +111,23 @@ public class Spawn : MonoBehaviour
                 Pause();
         }
     }
+
+    
+
+    //-----------------------------------------------------------------------------
+    // Data
+    //-----------------------------------------------------------------------------
+    public void Setup()
+    {
+        separationSlider.value =separationWeight;
+        separationSlider.onValueChanged.AddListener( ( value ) => separationWeight = value );
+
+        alignmentSlider.value = alignmentWeight;
+        alignmentSlider.onValueChanged.AddListener( ( value ) => alignmentWeight = value );
+
+        cohesionSlider.value = cohesionWeight;
+        cohesionSlider.onValueChanged.AddListener( ( value ) => cohesionWeight = value );
+	}
 
     public void Resume()
     {
