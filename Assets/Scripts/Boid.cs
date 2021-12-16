@@ -40,7 +40,6 @@ public class Boid : MonoBehaviour
     void Start()
     {
         collider_size = this.gameObject.GetComponent<SphereCollider>().radius;
-        
     }
 
     // Update is called once per frame
@@ -49,9 +48,6 @@ public class Boid : MonoBehaviour
 
     }
     
-
-
-
     void FixedUpdate()
     {
 
