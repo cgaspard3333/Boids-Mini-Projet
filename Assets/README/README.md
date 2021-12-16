@@ -3,14 +3,17 @@
 ## Intelligence distribuée
 
 [définition](https://fr.wikipedia.org/wiki/Intelligence_distribuée) : Apparition de phénomènes cohérents à l'échelle d'une population dont les individus agissent selon des règles simples.
-
 Indépendance entre les actions et règles qui régissent les individus et la forme ou la dynamique collective.
+
+## Intêrets et enjeux de l'intelligence distribuée 
+Une grande qualité d'un tel système est  son aptitude à agir de façon coordonnée sans la présence d’un coordinateur ou d’un contrôleur externe.
 
 ## Applications et Intérêts pour notre formation
 
 Dans le cas présent des boids, on pourrait utiliser ce type d'algorithme embarqué sur un drone pour permettre à une flotte de drones de se dissimuler parmi des oiseaux ou des poissons.
 Une autre application encore serait faire du mapping avec un poids de séparation réglée haut.
 On peut simuler l'environnement aérien et sous-marin.
+
 
 ## Résumé concept Boids
 
