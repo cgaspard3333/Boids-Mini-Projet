@@ -1,45 +1,50 @@
+
+
 # Boids-Mini-Projet Group 1
 
 ## Intelligence distribuée
 
 [définition](https://fr.wikipedia.org/wiki/Intelligence_distribuée) : Apparition de phénomènes cohérents à l'échelle d'une population dont les individus agissent selon des règles simples.
-Indépendance entre les actions et règles qui régissent les individus et la forme ou la dynamique collective.
 
-## Intêrets et enjeux de l'intelligence distribuée 
-Une grande qualité d'un tel système est  son aptitude à agir de façon coordonnée sans la présence d’un coordinateur ou d’un contrôleur externe.
+Basiquement, l'intelligence distribuée est le fait de créer des règles en apparence simples pour des objets. 
+Mais lorsque l'on observe une population significative de ces objets dont chacun obéit aux mêmes règles, on remarque des comportements
+d'apparence plus complexes. C'est ce genre de comportements bien plus élaborés que les règles initiales que l'on souhaite recréer dans le cas d'essaims de drones, entre autres. Parmi les exemples de formations complexes régis par des règles élémentaires, on peut penser à des flocks d'oiseaux ou encore le Jeu de la vie de Conway.
+
 
 ## Applications et Intérêts pour notre formation
 
 Dans le cas présent des boids, on pourrait utiliser ce type d'algorithme embarqué sur un drone pour permettre à une flotte de drones de se dissimuler parmi des oiseaux ou des poissons.
-Une autre application encore serait faire du mapping avec un poids de séparation réglée haut.
-On peut simuler l'environnement aérien et sous-marin.
-
+Une autre application encore serait de faire du mapping avec un poids de séparation réglée haut.
+Aussi, c'est en simulant informatiquement les formations en V des oiseaux (régis par des règles individuelles très simples) on est capable
+de prouver qu'utiliser de telles formations permet d'économiser du carburant pour les avions et de la batterie pour les drones. 
 
 ## Résumé concept Boids
 
-On parle de boid dans un cas de figure comme celui où on a pas de communication.
-Le voisinage est défini par une distance et un angle.
-![neighborhood](./img/neighborhood.gif)
-
-Permet de simuler un comportement égerment et évoluant en suivant ces 3 règles suivantes :
+Les boids sont des individus rassemblés en un groupe. Ils peuvent simuler des flocks d'oiseaux, des essaims d'abeilles ou encore des bancs de poissons. En l'occurrence, ils sont régis par trois règles simples mais peuvent engendrer des comportements assez impressionants :
 
 ### Cohésion
 
 ![cohésion](./img/cohesion.gif)
 
-Une entité d'un boid doit se diriger vers la position moyenne des voisins du boid.
+Une entité d'une flock tend à se diriger vers la position moyenne des boids voisins.
 
 ### Alignement
 
 ![alignement](./img/alignment.gif)
 
-L'entité doit se diriger dans la même direction que la direction moyenne de ses voisins de son boid.
+L'entité tend à s'aligner vers la direction moyenne des boids voisins.
 
 ### Séparation
 
 ![séparation](./img/separation.gif)
 
-L'entité ne doit pas non plus être trop proche sinon elle s'éloigne en gardant une "distance de sécurité".
+Un boid garde une certaine distance minimale par rapport à ses voisins pour ne pas encombrer la flock.
+
+![neighborhood](./img/neighborhood.gif)
+
+Les boids voisins sont simplement les autres boids qui se trouvent dans la zone considérée par le boid. 
+
+Ces trois règles, en apparence évidentes, engendrent des mouvements complexes rappelant clairement des flock d'oiseaux ou des bancs de poisson. En cela, les boids sont des exemples concrets de l'intelligence distribuée.
 
 ## Description du projet
 
