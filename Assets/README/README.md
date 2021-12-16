@@ -8,15 +8,14 @@
 
 Basiquement, l'intelligence distribuée est le fait de créer des règles en apparence simples pour des objets. 
 Mais lorsque l'on observe une population significative de ces objets dont chacun obéit aux mêmes règles, on remarque des comportements
-d'apparence plus complexes. C'est ce genre de comportements bien plus élaborés que les règles initiales que l'on souhaite recréer dans le cas d'essaims de drones, entre autres. Parmi les exemples de formations complexes régis par des règles élémentaires, on peut penser à des flocks d'oiseaux ou encore le Jeu de la vie de Conway.
+d'apparence plus complexes. C'est ce genre de comportements bien plus élaborés que les règles initiales que l'on souhaite recréer dans le cas d'essaims de drones, entre autres. Parmi les exemples de formations complexes régies par des règles élémentaires, on peut penser à des flocks d'oiseaux ou encore le Jeu de la vie de Conway.
 
 
 ## Applications et Intérêts pour notre formation
 
 Dans le cas présent des boids, on pourrait utiliser ce type d'algorithme embarqué sur un drone pour permettre à une flotte de drones de se dissimuler parmi des oiseaux ou des poissons.
 Une autre application encore serait de faire du mapping avec un poids de séparation réglée haut.
-Aussi, c'est en simulant informatiquement les formations en V des oiseaux (régis par des règles individuelles très simples) on est capable
-de prouver qu'utiliser de telles formations permet d'économiser du carburant pour les avions et de la batterie pour les drones. 
+Aussi, c'est en simulant informatiquement les formations en V des oiseaux (régies par des règles individuelles très simples) qu'on est capable de prouver qu'imiter de telles formations en vol permet d'économiser du carburant pour les avions et de la batterie pour les drones. 
 
 ## Résumé concept Boids
 
