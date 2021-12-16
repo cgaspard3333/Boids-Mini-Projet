@@ -8,9 +8,6 @@ public class Boid : MonoBehaviour
     private GameObject spawn;
     private GameObject[] theFlock;
 
-    //-----------------------------------------------------------------------------
-    // Const Data
-    //-----------------------------------------------------------------------------
     private static readonly float mMaxVelocity = 15.0f;
     private static readonly float mMaxCubeExtentZ = 100.0f;
     private static readonly float mMaxCubeExtentX = 100.0f;
@@ -20,13 +17,9 @@ public class Boid : MonoBehaviour
     public float alignmentWeight;
     public float cohesionWeight;
 
-    //-----------------------------------------------------------------------------
-    // Data
-    //-----------------------------------------------------------------------------
     public float mRadiusSquaredDistance = 1.0f;
     public Vector3 mVelocity = new Vector3();
 
-    //-----------------------------------------------------------------------------
     private void Reposition()
     {
         Vector3 position = transform.position;
@@ -68,9 +61,7 @@ public class Boid : MonoBehaviour
         transform.position = position;
     }
 
-    //-----------------------------------------------------------------------------
-    // Flocking Behavior
-    //-----------------------------------------------------------------------------
+
     private Vector3 FlockingBehaviour()
     {
         Vector3 cohesionVector = new Vector3();
@@ -105,64 +96,19 @@ public class Boid : MonoBehaviour
             return Vector3.zero;
         }
 
-        // revert vector
-        // separation step
         separateVector /= count;
         separateVector *= -1;
 
-        // forward step
         alignmentVector /= count;
 
-        // cohesione step
         cohesionVector /= count;
         cohesionVector = (cohesionVector - transform.position);
 
-        // Add All vectors together to get flocking
         Vector3 flockingVector = ((separateVector.normalized * separationWeight) +
                                     (cohesionVector.normalized * cohesionWeight) +
                                     (alignmentVector.normalized * alignmentWeight));
 
         return flockingVector;
-    }
-
-    public void IncreaseVariables(int variable)
-    {
-        if (variable == 0)
-        {
-            this.mVelocity.x += 0.1f;
-            this.mVelocity.y += 0.1f;
-            this.mVelocity.z += 0.1f;
-            print("Velocity now is " + this.mVelocity.ToString());
-        }
-        else if (variable == 1)
-        {
-            this.mRadiusSquaredDistance += 0.2f;
-            print("Minimal distance between boids now is " + this.mRadiusSquaredDistance.ToString());
-        }
-    }
-
-    public void DecreaseVariables(int variable)
-    {
-        if (variable == 0)
-        {
-            this.mVelocity.x -= 0.1f;
-            this.mVelocity.y -= 0.1f;
-            this.mVelocity.z -= 0.1f;
-            if(this.mVelocity.x < 0)
-                this.mVelocity.x = 0;
-            if(this.mVelocity.y < 0)
-                this.mVelocity.y = 0;
-            if(this.mVelocity.z < 0)
-                this.mVelocity.z = 0;
-            print("Velocity now is " + this.mVelocity.ToString());
-        }
-        else if (variable == 1)
-        {
-            this.mRadiusSquaredDistance -= 0.2f;
-            if(this.mRadiusSquaredDistance < 0)
-                this.mRadiusSquaredDistance = 0;    
-            print("Minimal distance between boids now is " + this.mRadiusSquaredDistance.ToString());
-        }
     }
 
     void Start()
